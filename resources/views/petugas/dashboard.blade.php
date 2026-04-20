@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,7 +147,7 @@
                     <div class="col-xl-4 col-sm-6">
                         <div class="stat-card mint">
                             <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
-                            <div class="stat-label">Cetak Laporan</div>
+                            <div class="stat-label">Laporan</div>
                             <div class="stat-value">7</div>
                             <div class="stat-sub">
                                 <span class="stat-pill up"><i class="fas fa-arrow-up" style="font-size:.6rem"></i> 2</span>&nbsp;laporan baru

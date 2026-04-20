@@ -10,6 +10,12 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
+
+ $peminjamans = Peminjaman::with('alat') // 🔥 DI SINI
+        ->where('user_id', auth()->id())
+        ->latest()
+        ->get();
+
      $data = Peminjaman::with(['user', 'alat'])->get();
         return view('admin.peminjam.index', compact('data'));
     }

@@ -1,24 +1,30 @@
-@extends('layouts.user')
-
-@section('content')
-
 <style>
     :root {
-        --bg: #0f1117;
-        --surface: #1a1d27;
-        --surface2: #222636;
-        --border: #2e3248;
-        --accent: #4f6ef7;
-        --accent-soft: rgba(79, 110, 247, 0.12);
-        --green: #22c55e;
-        --green-soft: rgba(34, 197, 94, 0.12);
-        --red: #ef4444;
-        --red-soft: rgba(239, 68, 68, 0.12);
-        --yellow: #f59e0b;
-        --yellow-soft: rgba(245, 158, 11, 0.12);
-        --text: #e2e8f0;
-        --text-muted: #64748b;
-        --text-dim: #94a3b8;
+        /* pastel ungu pink theme */
+        --bg: #faf7ff; /* soft lavender background */
+        --surface: #ffffff;
+        --surface2: #f3e8ff; /* light purple */
+        --border: #eadcff;
+
+        --accent: #a78bfa; /* pastel purple */
+        --accent-soft: rgba(167, 139, 250, 0.15);
+
+        --pink: #f9a8d4;
+        --pink-soft: rgba(249, 168, 212, 0.18);
+
+        --purple: #c4b5fd;
+        --purple-soft: rgba(196, 181, 253, 0.18);
+
+        --green: #86efac;
+        --green-soft: rgba(134, 239, 172, 0.18);
+
+        --red: #fda4af;
+        --red-soft: rgba(253, 164, 175, 0.18);
+
+        --text: #2e2a3b;
+        --text-muted: #7c7a88;
+        --text-dim: #a1a1aa;
+
         --radius: 12px;
         --radius-sm: 8px;
     }
@@ -43,7 +49,6 @@
         font-size: 22px;
         font-weight: 700;
         color: var(--text);
-        letter-spacing: -0.3px;
         margin-bottom: 4px;
     }
 
@@ -58,7 +63,7 @@
         overflow: hidden;
         border: 1px solid var(--border);
         background: var(--surface);
-        box-shadow: none;
+        box-shadow: 0 8px 20px rgba(167, 139, 250, 0.08);
     }
 
     .card-body {
@@ -84,84 +89,56 @@
         letter-spacing: 0.8px;
         color: var(--text-muted);
         text-align: center;
-        border: none;
     }
 
     .table tbody td {
         padding: 16px 20px;
         font-size: 14px;
-        color: var(--text-dim);
-        vertical-align: middle;
+        color: var(--text);
         text-align: center;
-        border: none;
         border-bottom: 1px solid var(--border);
     }
 
-    .table tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: transparent;
-    }
-
-    .table tbody tr {
-        transition: background 0.15s ease;
-    }
-
     .table tbody tr:hover {
-        background-color: rgba(255,255,255,0.02);
-        transform: none;
+        background-color: #faf5ff;
     }
 
     .badge.bg-success {
-        background-color: var(--green-soft) !important;
-        color: var(--green);
+        background-color: var(--purple-soft) !important;
+        color: var(--accent);
         padding: 5px 12px;
         border-radius: 20px;
         font-size: 12px;
         font-weight: 600;
-        border: 1px solid rgba(34, 197, 94, 0.2);
+        border: 1px solid rgba(167, 139, 250, 0.25);
     }
 
     .badge.bg-danger {
-        background-color: var(--red-soft) !important;
-        color: var(--red);
+        background-color: var(--pink-soft) !important;
+        color: #db2777;
         padding: 5px 12px;
         border-radius: 20px;
         font-size: 12px;
         font-weight: 600;
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(249, 168, 212, 0.35);
     }
 
     .btn-primary {
         background: var(--accent-soft);
-        border: 1px solid rgba(79, 110, 247, 0.25);
+        border: 1px solid rgba(167, 139, 250, 0.35);
         color: var(--accent);
         border-radius: var(--radius-sm);
         font-size: 13px;
         font-weight: 600;
         padding: 7px 14px;
-        transition: all 0.15s ease;
+        transition: 0.2s ease;
     }
 
     .btn-primary:hover {
-        background: rgba(79, 110, 247, 0.2);
-        border-color: rgba(79, 110, 247, 0.4);
-        color: var(--accent);
-        transform: none;
-    }
-
-    .btn-secondary {
-        background: var(--surface2);
-        border: 1px solid var(--border);
-        color: var(--text-muted);
-        border-radius: var(--radius-sm);
-        font-size: 13px;
-        font-weight: 600;
-        padding: 7px 14px;
+        background: rgba(167, 139, 250, 0.25);
     }
 </style>
+
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <div class="container-fluid px-4">
@@ -180,7 +157,7 @@
                         <th>Kategori</th>
                         <th>Stok</th>
                         <th>Kondisi</th>
-
+                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -198,19 +175,13 @@
                             @else
                                 <span class="badge bg-danger">Habis</span>
                             @endif
+                        </td>
 
-                           
-                                @foreach ($alats as $alat)
- <td>           
-                                <a href="{{ route('user.peminjaman.create', $alat->id) }}" 
-                                   class="btn btn-primary btn-sm">
-                                    Pinjam
-                                </a>
-                                
-
-                                @endforeach
-
-                            </td>
+                        <td>
+                            <a href="{{ route('user.peminjaman.create', $alat->id) }}" 
+                               class="btn btn-primary btn-sm">
+                                Pinjam
+                            </a>
                         </td>
                     </tr>
                     @endforeach
@@ -222,5 +193,3 @@
     </div>
 
 </div>
-
-@endsection

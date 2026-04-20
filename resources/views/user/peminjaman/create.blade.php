@@ -111,7 +111,7 @@
             </div>
 
             <!-- FORM -->
-            <form action="{{ route('user.peminjaman.store') }}" method="POST">
+            <form id="formPinjam" action="{{ route('user.peminjaman.store') }}" method="POST">
                 @csrf
 
                 <input type="hidden" name="alat_id" value="{{ $alat->id }}">
@@ -136,7 +136,7 @@
                         Kembali
                     </a>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="button" onclick="confirmPinjam()" class="btn btn-primary">
                         Pinjam Sekarang
                     </button>
                 </div>
@@ -147,5 +147,40 @@
     </div>
 
 </div>
+
+<!-- SWEETALERT CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- KONFIRMASI -->
+<script>
+function confirmPinjam() {
+    Swal.fire({
+        title: 'Yakin mau pinjam?',
+        text: "Pastikan data sudah benar!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#6c63ff',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, pinjam!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('formPinjam').submit();
+        }
+    })
+}
+</script>
+
+<!-- ALERT SUKSES -->
+@if(session('success'))
+<script>
+    Swal.fire({
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        icon: 'success',
+        confirmButtonColor: '#6c63ff'
+    });
+</script>
+@endif
 
 @endsection

@@ -69,14 +69,16 @@ Route::middleware('auth')->group(function () {
         return view('petugas.dashboard'); 
     })->name('dashboard');
 
+
     Route::get('/peminjaman', [PetugasPeminjamanController::class, 'index'])->name('peminjaman');
     Route::put('/peminjaman/{id}/setujui', [PetugasPeminjamanController::class, 'setujui'])->name('setujui');
     Route::put('/peminjaman/{id}/tolak', [PetugasPeminjamanController::class, 'tolak'])->name('tolak');
     Route::put('/peminjaman/{id}/pending', [PetugasPeminjamanController::class, 'pending'])->name('pending');
 
-    // ✅ Diperbaiki
-    Route::get('/pengembalian', [PengembalianController::class, 'monitoring'])
-        ->name('pengembalian');
+
+    
+    Route::get('/pengembalian', [PengembalianController::class, 'monitoring'])->name('pengembalian');
+    Route::post('/pengembalian', [PengembalianController::class, 'store'])->name('pengembalian.store');
 
       Route::get('/laporan', [LaporanController::class, 'cetak'])->name('laporan');
 
@@ -98,6 +100,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/peminjaman/create/{id}', [UserPeminjamanController::class, 'create'])
     ->name('peminjaman.create');
 
+    Route::get('/peminjaman', [UserPeminjamanController::class, 'index'])
+    ->name('peminjaman');
+
     Route::post('/peminjaman', [UserPeminjamanController::class, 'store'])
         ->name('peminjaman.store');
 
@@ -118,5 +123,6 @@ Route::post('/pengembalian/{id}', [UserPengembalianController::class, 'kembalika
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

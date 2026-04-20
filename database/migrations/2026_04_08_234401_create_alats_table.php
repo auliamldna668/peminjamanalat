@@ -14,6 +14,7 @@ return new class extends Migration
     Schema::create('alats', function (Blueprint $table) {
         $table->id();
         $table->string('nama_alat');
+        $table->foreignId('kategori_id')->constrained()->onDelete('cascade');
         $table->string('kode_alat')->unique();
         $table->integer('stok')->default(0);
         $table->timestamps();
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('alat');
+        Schema::dropIfExists('alats');
     }
 };

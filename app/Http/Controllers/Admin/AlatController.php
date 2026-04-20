@@ -25,18 +25,21 @@ public function store(Request $request)
 {
     $request->validate([
         'nama_alat' => 'required',
-        'kategori_id' => 'required',
+        'kategori_id' => 'required|exists:kategoris,id',
         'stok' => 'required|integer'
     ]);
 
     Alat::create([
-        'kode_alat' => 'ALT-' . time(), // 🔥 auto generate
+        'kode_alat' => 'ALT-' . time(),
         'nama_alat' => $request->nama_alat,
         'kategori_id' => $request->kategori_id,
         'stok' => $request->stok,
+
+        
     ]);
 
-    return redirect()->back()->with('success', 'Data berhasil ditambahkan');
+    return redirect()->route('admin.alat.index')
+        ->with('success', 'Data berhasil ditambahkan');
 }
 
 public function edit($id)

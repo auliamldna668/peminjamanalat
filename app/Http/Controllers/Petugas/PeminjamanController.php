@@ -32,12 +32,12 @@ class PeminjamanController extends Controller
         return back()->with('success', 'Ditolak');
     }
 
-    public function pending($id)
+    public function menunggu($id)
     {
         $data = Peminjaman::findOrFail($id);
-        $data->status = 'pending';
+        $data->status = 'menunggu';
         $data->save();
 
-        return back()->with('success', 'Dikembalikan ke pending');
+        return back()->with('success', 'Dikembalikan ke menunggu');
     }
 }       

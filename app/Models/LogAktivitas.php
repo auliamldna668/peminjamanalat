@@ -12,4 +12,8 @@ protected $fillable = [
     'user',
     'aktivitas'
 ];
+public function user()
+{
+    return $this->belongsTo(\App\Models\User::class);
+}
 }

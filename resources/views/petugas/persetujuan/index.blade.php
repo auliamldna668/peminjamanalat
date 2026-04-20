@@ -1,22 +1,22 @@
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
     :root {
-        --bg: #0f1117;
-        --surface: #1a1d27;
-        --surface2: #222636;
-        --border: #2e3248;
-        --accent: #4f6ef7;
-        --accent-soft: rgba(79, 110, 247, 0.12);
-        --green: #22c55e;
-        --green-soft: rgba(34, 197, 94, 0.12);
-        --red: #ef4444;
-        --red-soft: rgba(239, 68, 68, 0.12);
-        --yellow: #f59e0b;
-        --yellow-soft: rgba(245, 158, 11, 0.12);
-        --text: #e2e8f0;
-        --text-muted: #64748b;
-        --text-dim: #94a3b8;
-        --radius: 12px;
+        --bg: #fdf6ff;
+        --surface: #ffffff;
+        --surface2: #faf4ff;
+        --border: #ede9f6;
+        --accent-soft: rgba(167, 139, 250, 0.08);
+        --green: #6dbb8a;
+        --green-soft: rgba(109, 187, 138, 0.15);
+        --red: #e8837a;
+        --red-soft: rgba(232, 131, 122, 0.15);
+        --text: #3d3554;
+        --text-muted: #b0a8c8;
+        --text-dim: #6e6589;
+        --radius: 16px;
         --radius-sm: 8px;
+        --shadow: 0 4px 24px rgba(167, 139, 250, 0.10), 0 1px 4px rgba(0,0,0,0.04);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,15 +34,18 @@
         font-weight: 700;
         margin-bottom: 24px;
         letter-spacing: -0.3px;
+        color: var(--text);
     }
 
     table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius);
         overflow: hidden;
+        box-shadow: var(--shadow);
     }
 
     thead { background: var(--surface2); border-bottom: 1px solid var(--border); }
@@ -51,9 +54,9 @@
         padding: 14px 20px;
         text-align: left;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 0.9px;
         color: var(--text-muted);
     }
 
@@ -63,7 +66,7 @@
     }
 
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    tbody tr:hover { background: var(--accent-soft); }
 
     tbody td {
         padding: 16px 20px;
@@ -78,7 +81,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 7px 14px;
+        padding: 7px 16px;
         border-radius: var(--radius-sm);
         font-family: inherit;
         font-size: 13px;
@@ -92,23 +95,27 @@
     button[type="submit"]:first-of-type {
         background: var(--green-soft);
         color: var(--green);
-        border-color: rgba(34, 197, 94, 0.25);
+        border-color: rgba(109, 187, 138, 0.3);
     }
 
     button[type="submit"]:first-of-type:hover {
-        background: rgba(34, 197, 94, 0.2);
-        border-color: rgba(34, 197, 94, 0.4);
+        background: rgba(109, 187, 138, 0.25);
+        border-color: rgba(109, 187, 138, 0.5);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(109, 187, 138, 0.2);
     }
 
     button[type="submit"]:last-of-type {
         background: var(--red-soft);
         color: var(--red);
-        border-color: rgba(239, 68, 68, 0.25);
+        border-color: rgba(232, 131, 122, 0.3);
     }
 
     button[type="submit"]:last-of-type:hover {
-        background: rgba(239, 68, 68, 0.2);
-        border-color: rgba(239, 68, 68, 0.4);
+        background: rgba(232, 131, 122, 0.25);
+        border-color: rgba(232, 131, 122, 0.5);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(232, 131, 122, 0.2);
     }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Plus Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -130,21 +137,26 @@
         <td>{{ $item->alat->nama_alat ?? '-' }}</td>
         <td>{{ $item->status }}</td>
         <td>
-            @if($item->status == 'pending')
-                <form action="{{ route('petugas.setujui', $item->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit">Setujui</button>  <form action="{{ route('petugas.tolak', $item->id) }}" method="POST" style="display:inline;">
+    @if($item->status == 'menunggu')
+
+        <form action="{{ route('petugas.setujui', $item->id) }}" method="POST" style="display:inline;">
             @csrf
-            @method('PUT')
+             @method('PUT')
+            <button type="submit">Setujui</button>
+        </form>
+
+        <form action="{{ route('petugas.tolak', $item->id) }}" method="POST" style="display:inline;">
+            @csrf
+             @method('PUT')  
             <button type="submit">Tolak</button>
         </form>
-                </form>
+
+    @else
+        {{ $item->status }}
+    @endif
+</td>
                  
-            @else
-                {{ $item->status }}
-            @endif
-        </td>
+            </td>
     </tr>
     @endforeach
 </table>

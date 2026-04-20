@@ -8,14 +8,16 @@ use App\Models\Peminjaman;
 use App\Models\Pengembalian;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Admin\LogAktivitasController; 
 
 class PengembalianController extends Controller
 {
     public function index()
     {
         $peminjamans = Peminjaman::with(['alat', 'pengembalian'])
-    ->whereRaw('LOWER(TRIM(status)) = ?', ['dipinjam'])
-    ->get();
+            ->where('user_id', auth()->id())
+          ->where('status', 'disetujui')
+            ->get();
 
         return view('user.pengembalian.index', compact('peminjamans'));
     }
@@ -54,6 +56,11 @@ Pengembalian::create([
     'kondisi_barang' => 'baik',
     'catatan' => null
 ]);
+
+ LogAktivitasController::storeLog('User meminjam alat');
+ LogAktivitasController::storeLog('Admin menambah alat');
+LogAktivitasController::storeLog('Petugas menyetujui peminjaman');
+LogAktivitasController::storeLog('User mengembalikan alat');
 
             $peminjaman->update([
                 'status' => 'dikembalikan'

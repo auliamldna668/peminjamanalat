@@ -1,22 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\LogAktivitas;
-
+use Illuminate\Support\Facades\Auth;
 
 class LogAktivitasController extends Controller
 {
-    // Menampilkan semua log
+    // ✅ tampilkan log
     public function index()
     {
-        $data = LogAktivitas::latest()->get();
+        $data = LogAktivitas::with('user')->latest()->get(); // FIX
+
         return view('admin.logaktivitas.index', compact('data'));
     }
 
-    // (Opsional) Hapus log
+    // ✅ hapus log
     public function destroy($id)
     {
         $log = LogAktivitas::findOrFail($id);
@@ -25,11 +26,12 @@ class LogAktivitasController extends Controller
         return redirect()->back()->with('success', 'Log berhasil dihapus');
     }
 
-    public function store($aktivitas)
-{
-    LogAktivitas::create([
-        'user' => Auth::user()->name,
-        'aktivitas' => $aktivitas,
-    ]);
-}
+    // ✅ simpan log (dipanggil dari controller lain)
+    public static function storeLog($aktivitas)
+    {
+       LogAktivitas::create([
+    'user' => Auth::user()->name,
+    'aktivitas' => $aktivitas,
+]);
+    }
 }

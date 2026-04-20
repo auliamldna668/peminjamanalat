@@ -17,6 +17,11 @@ class Pengembalian extends Model
     'catatan'
 ];
 
+public function user()
+{
+    return $this->belongsTo(\App\Models\User::class);
+}
+
 public function peminjaman()
 {
     return $this->belongsTo(Peminjaman::class, 'peminjaman_id');

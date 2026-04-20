@@ -16,7 +16,7 @@
     <select name="role" required>
         <option value="admin" {{ $user->role=='admin'?'selected':'' }}>Admin</option>
         <option value="petugas" {{ $user->role=='petugas'?'selected':'' }}>Petugas</option>
-        <option value="peminjem" {{ $user->role=='peminjem'?'selected':'' }}>Peminjem</option>
+        <option value="user" {{ $user->role=='user'?'selected':'' }}>User</option>
     </select><br>
     <button type="submit">Update</button>
 </form>

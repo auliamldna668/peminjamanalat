@@ -76,7 +76,11 @@
         <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
         Daftar Alat
     </a>
-<!--  -->
+    
+<a class="nav-link" href="{{ route('user.peminjaman') }}">
+        <div class="sb-nav-link-icon"><i class="fas fa-undo"></i></div>
+        Peminjaman Saya
+    </a>
 
     <a class="nav-link" href="{{ route('user.pengembalian.index') }}">
         <div class="sb-nav-link-icon"><i class="fas fa-undo"></i></div>

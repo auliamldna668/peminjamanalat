@@ -29,14 +29,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
-            'role' => 'required|in:admin,petugas,peminjem'
+            'role' => 'required|in:admin,petugas,user'
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role
+            'role' => 'user'
         ]);
 
         return redirect()->route('admin.user.index')->with('success', 'User berhasil ditambahkan!');
@@ -55,7 +55,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:users,email,{$user->id}",
             'password' => 'nullable|string|min:6',
-            'role' => 'required|in:admin,petugas,peminjem'
+            'role' => 'required|in:admin,petugas,user'
         ]);
 
         $user->name = $request->name;

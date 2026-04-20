@@ -11,10 +11,8 @@ class PengembalianController extends Controller
 {
     public function index()
     {
-        $data = Pengembalian::with(['peminjaman.alat', 'peminjaman.user'])
-        ->latest()
-        ->get();
-        return view('admin.pengembalian.index', compact('data'));
+        $data = Pengembalian::all(); // ambil data
+    return view('admin.pengembalian.index', compact('data'));
     }
 
     public function create()
@@ -32,21 +30,23 @@ class PengembalianController extends Controller
         Pengembalian::create($request->all());
 
         return redirect()->route('pengembalian.index')->with('success', 'Data berhasil ditambah');
+        $data = Pengembalian::all();
+return view('admin.pengembalian.index', compact('pengembalians'));
     }
 
-    public function edit($id)
-    {
-        $data = Pengembalian::findOrFail($id);
-        return view('admin.pengembalian.edit', compact('data'));
-    }
+    // public function edit($id)
+    // {
+    //     $data = Pengembalian::findOrFail($id);
+    //     return view('admin.pengembalian.edit', compact('data'));
+    // }
 
-    public function update(Request $request, $id)
-    {
-        $data = Pengembalian::findOrFail($id);
-        $data->update($request->all());
+    // public function update(Request $request, $id)
+    // {
+    //     $data = Pengembalian::findOrFail($id);
+    //     $data->update($request->all());
 
-        return redirect()->route('pengembalian.index')->with('success', 'Data berhasil diupdate');
-    }
+    //     return redirect()->route('pengembalian.index')->with('success', 'Data berhasil diupdate');
+    // }
 
     public function destroy($id)
     {
